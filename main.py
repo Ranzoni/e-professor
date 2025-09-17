@@ -1,4 +1,3 @@
-# import asyncio
 from brain import embedding, ask
 from repository import RepoConnection
 import os
@@ -77,41 +76,9 @@ def ask_professor(interface: InterfaceChat):
             print(f'Erro: {str(e)}')
             interface.write_bot_message('Não conseugi processar a sua resposta')
     
-    # Iniciar thread em background
     thread = threading.Thread(target=process_in_background)
     thread.daemon = True
     thread.start()
-
-# def main():
-    # while True:
-    #     print('Faça uma pergunta ao professor:')
-    #     question = input()
-    #     question_embedded = embedding(question)
-        
-    #     repository = RepoConnection()
-    #     repository.connect()
-    #     chunks = repository.get_relevants_contents(question_embedded)
-    #     repository.disconnect()
-
-    #     if len(chunks) == 0:
-    #         print('Desculpe, mas eu não tenho conhecimento sobre este assunto.')
-    #     else:
-    #         content_to_learn = "\n".join(chunks)
-    #         ask_iterator = ask(
-    #             question=question,
-    #             knowledge=content_to_learn
-    #         )
-
-    #         async for answer_cunk in ask_iterator:
-    #             print(answer_cunk, end="", flush=True)
-
-    #     print()
-    #     print('Deseja continuar?')
-    #     another_question = input() == '0'
-    #     if not another_question:
-    #         break
-
-    #     os.system('cls')
 
 def teste(interface: InterfaceChat):
     question = interface.write_user_message()
@@ -130,7 +97,7 @@ if __name__ == "__main__":
     interface = InterfaceChat(action_button=teste)
     interface.run()
 
-    # schedule.every(5).seconds.do(import_new_files)
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(1)
+    schedule.every(5).seconds.do(import_new_files)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
