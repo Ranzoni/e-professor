@@ -1,0 +1,23 @@
+import pdfplumber
+
+
+__max_chunk_chars = 600
+
+def read(file_name):
+    with pdfplumber.open(file_name) as pdf:
+        total_pages = len(pdf.pages)
+        count = 0
+        for page in pdf.pages:
+            extracted_text = page.extract_text()
+
+            count += 1
+            percent = count * 100 / total_pages
+
+            text_idx = 0
+            done = False
+            while not done:
+                chunk = extracted_text[text_idx:text_idx + __max_chunk_chars]
+                text_idx += __max_chunk_chars
+                yield chunk, round(percent, 2)
+
+                done = __max_chunk_chars >= len(extracted_text) or (text_idx + 1) >= len(extracted_text)
