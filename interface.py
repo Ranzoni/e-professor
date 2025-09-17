@@ -41,10 +41,11 @@ class InterfaceChat():
         if message.strip() != "":
             self.__chatbox.config(state="normal")
             self.__chatbox.insert(tk.END, "Você: " + message + "\n", "user")
+            self.__chatbox.insert(tk.END, "\n", "bot")
             # self.__chatbox.insert(tk.END, "E-Professor: " + "Um minuto, estou pensando..." + "\n\n", "bot")
             self.__chatbox.insert(tk.END, "E-Professor: ", "bot")
             self.__chatbox.mark_set("bot_response_start", self.__chatbox.index(tk.END+"-1c"))
-            self.__chatbox.insert(tk.END, "\n\n", "bot")
+            # self.__chatbox.insert(tk.END, "\n\n", "bot")
             self.__chatbox.config(state="disabled")
             self.__chatbox.yview(tk.END)
             self._input.delete(0, tk.END)
