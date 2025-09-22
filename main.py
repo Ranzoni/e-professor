@@ -10,7 +10,6 @@ def ask_professor(interface: InterfaceChat):
     
     question = interface.write_user_message()
 
-
     def process_in_background():
         try:
             time.sleep(.7)
@@ -35,13 +34,12 @@ def ask_professor(interface: InterfaceChat):
                 for answer_chunk in ask_iterator:
                     interface.write_bot_message(answer_chunk)
 
-                interface.finish_chat_bot_message()
-
-            interface.finish_chat()
-                    
         except Exception as e:
             print(f'Erro: {str(e)}')
             interface.write_bot_message('Não consegui processar a sua resposta.')
+
+        interface.finish_chat_bot_message()
+        interface.finish_chat()
     
     thread = threading.Thread(target=process_in_background)
     thread.daemon = True
