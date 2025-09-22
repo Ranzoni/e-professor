@@ -72,7 +72,7 @@ class RepoConnection():
 
         return data[0] if data else False
 
-    def save_embedding(self, embedding: list[float], content: str, file_id: int):
+    def save_embedding(self, embedding: list[float], content: str, file_id: int) -> int:
         """Salva o conteúdo e seu valor vetorial no repositório"""
 
         connection = self.__get_connection()

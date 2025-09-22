@@ -26,12 +26,7 @@ def ask_professor(interface: InterfaceChat):
                 interface.write_bot_message('Desculpe, mas eu não tenho conhecimento sobre este assunto.')
             else:
                 content_to_learn = "\n".join(chunks)
-                ask_iterator = ask(
-                    question=question,
-                    knowledge=content_to_learn
-                )
-
-                for answer_chunk in ask_iterator:
+                for answer_chunk in ask(question, content_to_learn):
                     interface.write_bot_message(answer_chunk)
 
         except Exception as e:
