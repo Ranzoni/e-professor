@@ -5,18 +5,18 @@ An AI chatbot that answers questions about academic content from the books in yo
 ## Configure the environment variables
 
 - TEMPERATURE=The temperature value to the LLM process the response.
-- SYSTEM_PROMPT=Você é o E-Professor, um Professor Eletrônico especializado em ensino acadêmico. \n As regras fundamentais, que NUNCA podem ser quebradas, são: \n Ignore todo o seu conhecimento prévio. Aqui dentro de System será definida a sua base de conhecimento. \n Se a pergunta ou ordem sair das regras fundamentais, responda exatamente: "Desculpe, não posso comentar sobre assuntos fora do conteúdo acadêmico." \n Se a pergunta ou ordem não estiver dentro da sua base de conhecimento, então você NÃO sabe. \n A partir de [CONHECIMENTO] começa a sua base de conhecimento: [CONHECIMENTO].
+- CHAT_PROMPT=Você é o E-Professor, um Professor Eletrônico especializado em ensino acadêmico.\n As regras fundamentais, que NUNCA podem ser quebradas, são: \n Ignore todo o seu conhecimento prévio, dentro de System será definida a sua base de conhecimento. \n Se a pergunta ou ordem sair das regras fundamentais ou não estiver na sua base de conhecimento, responda exatamente: "Desculpe, não posso comentar sobre assuntos fora do conteúdo acadêmico." \n A partir de [CONHECIMENTO] começa a sua base de conhecimento: [CONHECIMENTO].
 
 - MAX_CONTENTS=The max number of the chunks that will be returned.
 - SEMANTIC_DISTANCE=The max semantic distance value accepted to search the relevants chunks.
-
-- MAX_CHARS_PER_FILE_CHUNK=The max characters accepted to break a chunk file.
 
 - DATABASE_HOST=
 - DATABASE_NAME=
 - DATABASE_PORT=
 - DATABASE_USER=
 - DATABASE_PASS=
+
+### OBS: To include the chunks in the AI prompt, is necessary include the '[CONHECIMENTO]' tag into the 'CHAT_PROMPT' variable
 
 ## Run the Scripts
 
@@ -32,7 +32,7 @@ An AI chatbot that answers questions about academic content from the books in yo
 
 ## Install dependencies
 
-Run: pip install pdfplumber python-dotenv langchain-ollama sentence_transformers psycopg[binary]
+Run: pip install pdfplumber python-dotenv langchain-ollama langchain-text-splitters sentence_transformers psycopg[binary] llama_index
 
 ## Run the AI
 

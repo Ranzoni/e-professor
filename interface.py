@@ -3,8 +3,8 @@ from tkinter import scrolledtext, ttk
 
 
 class InterfaceChat():
-    def __init__(self, action_button):
-        self.__waiting_message = 'Um minuto, estou pensando...'
+    def __init__(self, waiting_message, action_button):
+        self.__waiting_message = waiting_message
 
         self.__answer_started = False
 
@@ -38,9 +38,10 @@ class InterfaceChat():
 
         self._input = ttk.Entry(frame_input, font=('Arial', 11))
         self._input.pack(side='left', fill='x', expand=True, padx=(0, 5))
+        self._input.bind('<Return>', lambda event: action_button(self))
 
-        send_button = ttk.Button(frame_input, text='Enviar', command=lambda: action_button(self))
-        send_button.pack(side='right')
+        self.__send_button = ttk.Button(frame_input, text='Enviar', command=lambda: action_button(self))
+        self.__send_button.pack(side='right')
 
         footer = tk.Label(self.__root, text='E-Professor © 2025 | Seu guia acadêmico virtual',
                     bg='#f5f5f5', fg='gray', font=('Arial', 9))
@@ -89,9 +90,11 @@ class InterfaceChat():
 
     def start_chat(self):
         self.__chatbox.config(state='normal')
+        self.__send_button.config(state='disabled')
 
     def finish_chat(self):
         self.__chatbox.config(state='disabled')
+        self.__send_button.config(state='enabled')
 
     def write_user_message(self):
         self.__answer_started = False

@@ -30,10 +30,13 @@ def import_new_files():
             __register_log('Incorporando o arquivo...')
             try:
                 file_id = repository.save_file(file)
+                last_percent = 0
                 for chunk, percent in read(f'{folder}/{file}'):
                     content_embedded = embedding(chunk)
                     repository.save_embedding(content_embedded, chunk, file_id)
-                    __register_log(f'Incorporação em {percent}%')
+                    if percent != last_percent:
+                        last_percent = percent
+                        __register_log(f'Incorporação em {percent}%')
 
                 repository.commit()
             except Exception as e:
