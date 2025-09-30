@@ -1,4 +1,4 @@
-from brain import embedding, ask, get_question_transformed
+from brain import embedding, ask, get_question_transformed, reclassification
 from repository import RepoConnection
 import time
 from interface import InterfaceChat
@@ -27,14 +27,14 @@ def ask_professor(interface: InterfaceChat):
             repository.connect()
             chunks = repository.get_relevants_contents(question_embedded)
             repository.disconnect()
-            
 
             if len(chunks) == 0:
                 interface.write_bot_message('Desculpe, mas eu não tenho conhecimento sobre este assunto.')
                 log_file.register_log('Nenhum chunk encontrado.', 'CHUNKS ENCONTRADOS')
             else:
-                content_to_learn = '\n'.join(chunks)
-                log_file.register_log(content_to_learn, 'CHUNKS ENCONTRADOS')
+                log_file.register_log('\n'.join(chunks), 'CHUNKS ENCONTRADOS')
+                chunks_reclassificated = reclassification(question, chunks)
+                content_to_learn = '\n'.join(chunks_reclassificated)
 
                 log_file.register_log('', 'RESPOSTA DO BOT')
                 for answer_chunk in ask(question, content_to_learn):
