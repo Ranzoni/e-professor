@@ -33,6 +33,20 @@ class InterfaceChat():
         )
         self.__chatbox.pack(fill='both', expand=True)
 
+        self.__chatbox.tag_config('user_style', 
+                                 foreground='#2c3e50',
+                                 font=('Arial', 11, 'bold'),
+                                 lmargin1=10,
+                                 lmargin2=10,
+                                 rmargin=10)
+
+        self.__chatbox.tag_config('bot_style',
+                                 foreground="#1d8a4b",
+                                 font=('Arial', 11, 'bold'),
+                                 lmargin1=10,
+                                 lmargin2=10,
+                                 rmargin=10)
+
         frame_input = tk.Frame(self.__root, bg='#f5f5f5')
         frame_input.pack(fill='x', padx=10, pady=10)
 
@@ -74,11 +88,17 @@ class InterfaceChat():
                 self.__bot_idx -= 1
 
     def __add_message(self, message, type: str):
-        self.__chatbox.insert(tk.END, message, self.__get_next_tag_idx(type))
+        tag_idx = self.__get_next_tag_idx(type)
+        style_tag = 'user_style' if self.__is_user_tag(type) else 'bot_style'
+        
+        self.__chatbox.insert(tk.END, message, (tag_idx, style_tag))
         self.__chatbox.yview(tk.END)
 
     def __add_same_message(self, message, type: str):
-        self.__chatbox.insert(tk.END, message, self.__get_tag_idx(type))
+        tag_idx = self.__get_tag_idx(type)
+        style_tag = 'user_style' if self.__is_user_tag(type) else 'bot_style'
+        
+        self.__chatbox.insert(tk.END, message, (tag_idx, style_tag))
         self.__chatbox.yview(tk.END)
 
     def __remove_last_message(self, type: str):
@@ -124,4 +144,3 @@ class InterfaceChat():
 
     def run(self):
         self.__root.mainloop()
-        
