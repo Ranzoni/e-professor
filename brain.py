@@ -24,18 +24,6 @@ def ask(question: str, knowledge: str):
             ('human', question),
         ]
 
-        preparingAnswer = False
-        initAnswer = False
-        chunkContent = ''
-        # for chunk in llm.stream(messages):
-        #     chunkContent += chunk.content
-        #     if preparingAnswer:
-        #         initAnswer = True
-        #         preparingAnswer = False
-        #     elif initAnswer:
-        #         yield chunk.content
-        #     elif '</think>' in chunkContent:
-        #         preparingAnswer = True
         for chunk in llm.stream(messages):
             yield chunk.content
     except Exception as e:
@@ -43,6 +31,8 @@ def ask(question: str, knowledge: str):
         return 'Ops... Houve algum problema no meu processamento, não consigo te responder. Mas, tente novamente.'
 
 def get_question_transformed(question: str) -> str:
+    load_dotenv()
+    
     try:
         system_prompt = os.getenv('TRANSFORM_PROMPT')
         system_prompt = system_prompt.replace('[QUESTION]', question)

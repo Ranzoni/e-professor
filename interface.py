@@ -36,6 +36,7 @@ class InterfaceChat():
         frame_input = tk.Frame(self.__root, bg='#f5f5f5')
         frame_input.pack(fill='x', padx=10, pady=10)
 
+        self.__action_button = action_button
         self._input = ttk.Entry(frame_input, font=('Arial', 11))
         self._input.pack(side='left', fill='x', expand=True, padx=(0, 5))
         self._input.bind('<Return>', lambda event: action_button(self))
@@ -91,10 +92,12 @@ class InterfaceChat():
     def start_chat(self):
         self.__chatbox.config(state='normal')
         self.__send_button.config(state='disabled')
+        self._input.bind('<Return>', lambda event: None)
 
     def finish_chat(self):
         self.__chatbox.config(state='disabled')
         self.__send_button.config(state='enabled')
+        self._input.bind('<Return>', lambda event: self.__action_button(self))
 
     def write_user_message(self):
         self.__answer_started = False
